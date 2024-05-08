@@ -10,4 +10,11 @@ main.lot
 main.toc
 main.synctex.gz
 
+# R zeug
+.Rhistory
+.RData
+.Rproj.user
+.Rproj
+
+
 \end{verbatim}
