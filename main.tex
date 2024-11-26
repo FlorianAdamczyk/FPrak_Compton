@@ -50,7 +50,7 @@
 \usepackage{siunitx}
 \sisetup{
 	locale = DE ,
-	separate-uncertainty = false,
+	separate-uncertainty = true,
 	%per-mode = fraction,
 	%per-mode = symbol
 }
@@ -149,18 +149,18 @@
 
     \chapter{Theoretische Grundlagen}
     	\section{Herleitung der Compton-Formel mit Impuls- und Energieerhaltung}
-        	Es gelten im folgenden die Beziehungen:
+        	Es gelten im Folgenden die Beziehungen:
 				\begin{align}
 					\text{Impulserhaltung:} & \quad p_{\gamma} + p_e = p_{\gamma'} + p_{e'} \label{eq:Impulserhaltung} \\
 					\text{Energieerhaltung:} & \quad E_{\gamma} + E_e = E_{\gamma'} + E_{e'} \label{eq:Energieerhaltung}
 				\end{align}
 			mit den Impulsen $p$ und Energien $E$ der Photonen ($\gamma$) und Elektronen ($e$) vor und nach der Streuung.\\
-			Weiter ist $\Theta$ der Winkel zwischen einfallendem und gestreutem Photon und $\phi$ der Winkel um den das Elektron gestreut wird.\\
+			Weiter ist $\Theta$ der Winkel zwischen einfallendem und gestreutem Photon und $\phi$ der Winkel, um den das Elektron gestreut wird.\\
 
 			Zunächst betrachten wir die Impulserhaltung. Vor der Streuung haben wir ein Photon mit Impuls $p_{\gamma}$ und ein ruhendes Elektron mit Impuls $p_e = 0$. Nach der Streuung haben wir ein gestreutes Photon mit Impuls $p_{\gamma'}$ und ein gestreutes Elektron mit Impuls $p_{e'}$. Die Impulserhaltung lautet also:
 
 \[p_{\gamma} = p_{\gamma'} + p_{e'}\]
-Als nächstes betrachten wir die Energieerhaltung. Vor der Streuung haben wir ein Photon mit Energie $E_{\gamma}$ und ein ruhendes Elektron mit Ruheenergie $E_e = m_e c^2$. Nach der Streuung haben wir ein gestreutes Photon mit Energie $E_{\gamma'}$ und ein gestreutes Elektron mit kinetischer Energie $E_{e'}$. Die Energieerhaltung lautet also:
+Als Nächstes betrachten wir die Energieerhaltung. Vor der Streuung haben wir ein Photon mit Energie $E_{\gamma}$ und ein ruhendes Elektron mit Ruheenergie $E_e = m_e c^2$. Nach der Streuung haben wir ein gestreutes Photon mit Energie $E_{\gamma'}$ und ein gestreutes Elektron mit kinetischer Energie $E_{e'}$. Die Energieerhaltung lautet also:
 
 \[E_{\gamma} + m_e c^2 = E_{\gamma'} + E_{e'}\]
 
@@ -186,7 +186,7 @@ Schließlich können wir die Compton-Formel in Bezug auf die Änderung der Welle
 
 wo $\theta$ der Winkel ist, um den das Photon gestreut wird.
 
-	 \chapter{Versuchsaufbau und Durchführung}
+	 \chapter{Aufbau und Durchführung}
 		In unserem Versuchsaufbau dienen Gamma-Strahlen als Quelle für Photonen, die auf einen Plastikszintillator treffen und dort an Elektronen gestreut werden. Dieser Prozess ermöglicht die Untersuchung des Compton-Effekts, da die Photonen eine veränderte Wellenlänge aufweisen und im NaI-Szintillator detektiert werden können. Die geringe Dichte des Plastiks minimiert die Absorption der Photonen, sodass sie effektiv zum NaI-Szintillator gelangen, wo ihre Energie gemessen wird. Die Rückstoßenergie der Elektronen wird im Plastikszintillator erfasst.
 
 		Um die Ereignisse korrekt zuordnen zu können, wird eine Koinzidenzschaltung eingesetzt, die durch eine Delay-Box synchronisiert wird, um die Signale zeitlich abzugleichen. Die Kalibrierung des NaI-Szintillationsdetektors ist entscheidend, um die Energie der detektierten Photonen zu bestimmen. Hierfür werden die Positionen der Photopeaks von \ce{^137Cs} und \ce{^22Na} in den Energiespektren verwendet. Ein weiterer Referenzpunkt ist das “Pedestal”, der Basiswert ohne Eingangssignal.
@@ -212,24 +212,144 @@ wo $\theta$ der Winkel ist, um den das Photon gestreut wird.
 			  \begin{figure}
 					\centering
 					\includegraphics[width=.5\textwidth]{EichLinFit.png}
-					\caption{Linearer Fit an die gemessenen Energien der Gammaquellen mit R}
+					\caption[Linearer Fit zur Energieeichung]{Linearer Fit an die gemessenen Energien der Gammaquellen mit R}
 					\label{fig:EichLinFit}
 			  \end{figure}
 
-		  \section{Bestimmung der Elektron-Ruhemasse}
+			  Die Energieeichung erfolgte durch eine lineare Regression der gemessenen Energien der Gammaquellen in Abhängigkeit von den Kanälen. Die Steigung der Regressionsgeraden beträgt \num{0.96 +- 0.015} keV/Kanal, der y-Achsenabschnitt \num{126,98 +- 7,1}. Die Energieeichung ist in Abb. \vref{fig:EichLinFit} dargestellt.
+			  \begin{equation}\label{eq:Energieeichung}
+					K(E) = a \cdot E + K_0
+			  \end{equation}
+			  mit
+			 			\begin{align*}
+				a   &= \num{0.96 \pm 0.015} \, \text{keV/Kanal} \\
+				K_0 &= \num{126.98 \pm 7.1}
+			\end{align*}
 
-		  \section{Vergleich mit Klein–Nishina Formel}
+		  \section{Compton Streuung}
+				um aus den Kanallagen die Energie zu berechnen, stellen wir die Energieeichungsgleichung \ref{eq:Energieeichung} nach der Energie um:
+				\begin{equation}\label{eq:EnergieeichungUmgestellt}
+					E = \frac{K - K_0}{a}
+				\end{equation}
+
+				Der Fehler der Energie kann durch die Gaußsche Fehlerfortpflanzung berechnet werden:
+				\begin{equation}\label{eq:FehlerEnergie}
+					\sigma_E = \sqrt{\left(\frac{\partial E}{\partial K}\cdot \Delta E\right)^2 + \left(\frac{\partial E}{\partial K_0}\cdot K_0 \right)^2 + \left(\frac{\partial E}{\partial a} \cdot \Delta a \right)^2}
+				\end{equation}
+				welche man weiter vereinfachen kann, indem man die Ableitungen einsetzt:
+				\begin{equation}\label{eq:FehlerEnergieVereinfacht}
+					\sigma_E = \sqrt{\left(\frac{\Delta K}{a}\right)^2 + \left(\frac{\Delta K_0}{a}\right)^2 + \left(\frac{K - K_0}{a^2} \cdot \Delta a \right)^2}
+				\end{equation}
+
+				\begin{table}[]
+					\caption{Die gemessenen Kanalwerte in Abhängigkeit vom Winkel umgerechnet zu
+					den winkelabhängigen Energiewerten.}
+					\label{tab:Kanalwerte zu Energie}
+					\begin{tabular}{@{}ccc@{}}
+					\toprule
+					\textbf{Streuwinkel $\vartheta$} & \textbf{Kanal}  & \textbf{Energie $E'$}  \\ \midrule
+					\textbf{\ang{025,00}}            & \num{588,60+-5,00}                 & \qty{480,85 +- 11,76}{\kilo\electronvolt}                         \\
+					\textbf{\ang{040,00}}            & \num{548,80+-3,40}                 & \qty{439,40 +- 10,69}{\kilo\electronvolt}                         \\
+					\textbf{\ang{060,00}}            & \num{484,00+-3,90}                 & \qty{371,90 +- 10,25}{\kilo\electronvolt}                         \\
+					\textbf{\ang{080,00}}            & \num{427,00+-3,70}                 & \qty{312,52 +- 9,66 }{\kilo\electronvolt}                         \\
+					\textbf{\ang{100,00}}           & \num{356,80+-3,40}                 & \qty{239,40 +- 9,01 }{\kilo\electronvolt}                         \\
+					\textbf{\ang{120,00}}           & \num{324,70+-2,10}                 & \qty{205,96 +- 8,36 }{\kilo\electronvolt}                         \\ \bottomrule
+					\end{tabular}
+					\end{table}
+					
+				Trägt man nun die Werte grafisch gegen den Winkel auf, so ergibt sich der erwartete Verlauf, den man über die Comptonformel
+				\begin{equation}\label{eq:Comptonformel} E'(0) = \frac{1}{\frac{1-cos(\vartheta)}{m_ec^2}+\frac{1}{E}} \end{equation}
+				mit \(m_ec^2 = \qty{511}{\kilo\electronvolt} \) und der Photonenenergie des \ce{137Cs}"~Präparats von \(E = \qty{662}{\kilo\electronvolt}\), erhält. Dieser Verlauf ist in Abbildung \vref{fig:ComptonStreuung} dargestellt. Es gibt eine gute Übereinstimmung zwischen den Messwerten und der Comptonformel, nur bei sehr kleinen Winkeln von \ang{20} und \ang{40} gibt es eine starke Abweichung von der Theorie.
+				\begin{figure}
+					\centering
+					\includegraphics[width=.9\textwidth]{ComptonStreuungComptonformel.pdf}
+					\caption[Comptonstreuung: vergleich mit Comptonformel]{Die Energie der gestreuten Photonen in Abhängigkeit des Streuwinkels und der Comptonformel}
+					\label{fig:ComptonStreuung}
+				\end{figure}
+			
+		\section{Bestimmung der Elektronen-Ruhemasse}
+			Trägt man \(\Delta\frac{1}{E} = \frac{1}{E'} - \frac{1}{E}\) als Funktion von \(1-\cos(\vartheta)\) auf, so lässt sich mit Hilfe einer linearen Regression die Elektronenruhemasse bestimmen. Dieses Vorgehen ist in Abbildung \vref{fig:ComptonStreuungElektronenmasse} dargestellt.
+			
+			\begin{figure}[h!]
+				\centering
+				\includegraphics[width=.9\textwidth]{LinearerFitElektronenmasse.pdf}
+				\caption[Linearer Fit zur Bestimmung der Elektronenruhemasse]{$\Delta 1/E $ als Funktion von $1-\cos(\vartheta)$ und zugehörigem linearen Fit}
+				\label{fig:ComptonStreuungElektronenmasse}
+			\end{figure}
+
+			Die Steigung des Fits beträgt \qty{0,002 +- 0,00012}{\per\kilo\electronvolt}. Die Elektronenruhemasse kann nun durch die Steigung des Fits bestimmt werden, denn sie ist die Inverse der Steigung. Damit ergibt sich:
+			\begin{equation*}
+				m_e = \frac{1}{\text{Steigung}} = \frac{1}{\qty{0,002 +- 0,00012}{\per\kilo\electronvolt}} =  \highlight{\qty{501.74 +- 29.55 }{\kilo\electronvolt}}
+			\end{equation*}
+			Der Literaturwert von \qty{511}{\kilo\electronvolt} liegt im Fehlerintervall, sodass die Messung als erfolgreich betrachtet werden kann.
+
+		\section{Vergleich mit Klein–Nishina Formel}
+			Abschließend soll die gemessene Energieverteilung der gestreuten Photonen mit der Klein-Nishina-Formel verglichen werden. Die Klein-Nishina-Formel beschreibt den Wirkungsquerschnitt der Compton-Streuung und ist gegeben durch:
+			\begin{equation}\label{eq:KleinNishina}
+				\frac{d\sigma}{d\Omega} = \frac{r_e^2}{2} \left(\frac{1}{1+\frac{E}{m_ec^2}(1-\cos(\vartheta))} \right)^2 \left(\frac{1+\frac{E}{m_ec^2}}{1+\frac{E}{m_ec^2}(1-\cos(\vartheta))} + \frac{1-\cos(\vartheta)}{\sin^2(\vartheta)} - 1 \right)
+			\end{equation}
+			mit dem klassischen Elektronenradius \(r_e = \qty{2.82e-15}{\meter}\).\\
+
+			Die Formel gibt die Winkelabhängigkeit des Wirkungsquerschnitts an. Dazu wird ausgenutzt, dass der differentielle Wirkungsquerschnitt proportional zum Produkt aus der Peakhöhe, der Peakbreite $\sigma$ und dem Verhältnis aus Counts zur maximalen Countzahl ist. Es gilt also für die jeweiligen Messungen $i$:
+			\begin{equation}\label{eq:KleinNishinaVergleich}
+				{\frac{d\sigma}{d\Omega}}_i \propto \text{Peakhöhe}_i \cdot \sigma_i \cdot \frac{\text{Counts}_i}{\text{max Counts}}
+			\end{equation}
+
+			
+			\begin{table}[!h]
+				\caption[Proportionalitäten Klein-Nishina]{Die berechneten Proportionalwerte $\propto \frac{d \sigma}{d \Omega}$ in willkürlicher Einheit nach der Klein-Nishina-Formel in Abhängigkeit vom Winkel:}\label{tab:Nishi}
+				\begin{tabular}{@{}cc@{}}
+				\toprule
+				Streuwinkel & $\propto \frac{d \sigma}{d \Omega}$    \\ \midrule
+				\ang{40 }         & \num[separate-uncertainty=false]{30,  +- 1,93 e-4} \\
+				\ang{60 }         & \num[separate-uncertainty=false]{24,8 +- 1,54 e-4} \\
+				\ang{80 }         & \num[separate-uncertainty=false]{14,6 +- 1,07 e-4} \\
+				\ang{100}         & \num[separate-uncertainty=false]{12,3 +- 0,89 e-4} \\
+				\ang{120}         & \num[separate-uncertainty=false]{11,7 +- 0,79 e-4} \\ \bottomrule
+				\end{tabular}
+			\end{table}
+
+			\begin{figure}[!h]
+				\centering
+				\includegraphics[width=.9\textwidth]{KleinNishinaDiagramm.pdf}
+				\caption[Vergleich der Messdaten mit der Klein-Nishina-Formel]{Vergleich der proportionalen Werte $\propto \frac{d \sigma}{d \Omega}$ mit der Klein-Nishina-Formel mit $E=\qty{662}{\kilo\electronvolt}$.}
+				\label{fig:KleinNishinaDiagramm}
+			\end{figure}
+
+			Die Proportionalitäten der Klein-Nishina-Formel sind in Tabelle~\vref{tab:Nishi} aufgeführt. Der Vergleich der gemessenen Werte mit der Klein-Nishina-Formel ist in Abbildung \vref{fig:KleinNishinaDiagramm} dargestellt. Für die Berechnung der theoretischen Werte wurde $E = \qty{662}{\kilo\electronvolt} $ gesetzt. Es zeigt sich eine gute Übereinstimmung zwischen den Messwerten und der Theorie, wobei die Abweichungen im Rahmen der Messungenauigkeit liegen.
+
 
 
 
     \chapter{Fazit}
+			Zusammenfassend lässt sich sagen, dass der Compton-Effekt erfolgreich untersucht wurde. Die Energieeichung des NaI-Szintillationsdetektors wurde durchgeführt und die Energie der gestreuten Photonen für verschiedene Winkel gemessen. Die Compton-Wellenlänge des Elektrons und seine Masse wurden bestimmt und die Messungen des Wirkungsquerschnitts mit den theoretischen Werten verglichen. Die Ergebnisse zeigen eine gute Übereinstimmung mit der Theorie und bestätigen die Richtigkeit der Compton-Formel und der Klein-Nishina-Formel. Die {Elektronenruhemasse} konnte auf {\qty{1,81}{\percent}} genau bestimmt werden und liegt im Fehlerintervall des Literaturwerts. Der Versuch war somit erfolgreich und die Ziele wurden erreicht.
+
 
 	\listoffigures
     \addcontentsline{toc}{chapter}{\listfigurename}
 
 	\begin{thebibliography}{111} \addcontentsline{toc}{chapter}{Literaturverzeichnis}
 		\bibitem{Anleitung}
-		AR Dr. Jens Sören Lange, \glqq Praktikumsanleitung zu \glq Versuch: Comptoneffekt\grq \grqq{}, 2015.
+		AR Dr. Jens Sören Lange,\\
+		\glqq Praktikumsanleitung zu \glq Versuch: Comptoneffekt\grq \grqq{}, 2015.
+
+		\bibitem{Compton}
+		A. H. Compton, \glqq A Quantum Theory of the Scattering of X-rays by Light Elements\grqq{}, Physical Review, 1923.
+	
+		\bibitem{Knoll}
+		Glenn F. Knoll, \glqq Radiation Detection and Measurement\grqq{}, 4th Edition, Wiley, 2010.
+	
+		\bibitem{Leo}
+		W. R. Leo, \glqq Techniques for Nuclear and Particle Physics Experiments\grqq{}, 2nd Edition, Springer, 1994.
+	
+		\bibitem{Evans}
+		R. D. Evans, \glqq The Atomic Nucleus\grqq{}, McGraw-Hill, 1955.
+	
+		\bibitem{Beiser}
+		Arthur Beiser, \glqq Concepts of Modern Physics\grqq{}, 6th Edition, McGraw-Hill, 2003.
+	
+		\bibitem{Serway}
+		Raymond A. Serway, John W. Jewett, \glqq Physics for Scientists and Engineers\grqq{}, 9th Edition, Cengage Learning, 2013.
 
 
 	\end{thebibliography}
@@ -239,18 +359,27 @@ wo $\theta$ der Winkel ist, um den das Photon gestreut wird.
     \addcontentsline{toc}{chapter}{Anhang}
     \FloatBarrier
 
-
-
-	
-		\begin{figure}[ht]
+	\begin{figure}[h!]
 			\centering
-			\includegraphics[page=1,width=.4\textwidth]{eich_pedestal2}
+			\includegraphics[page=1,width=.5\textwidth]{eich_pedestal2}
 			\includegraphics[page=1,width=.4\textwidth]{eich_na2}\hspace*{.25\textwidth}%
 			\includegraphics[page=1,width=.4\textwidth]{eich_cs}
 			
-			\caption{Eichmessung: Oben Pedestal, unten links: Na, unten rechts: Cs}
+			\caption[Eichmessung]{Eichmessung: Oben Pedestal, unten links: Na, unten rechts: Cs}
 			\label{fig:Eichmessung}
 		\end{figure}
-
+	
+		\begin{figure}
+			\centering
+			\includegraphics[page=1,width=.4\textwidth]{data/cs25.pdf}\hspace*{.25\textwidth}%
+			\includegraphics[page=1,width=.4\textwidth]{data/cs40_2.pdf}
+			\includegraphics[page=1,width=.4\textwidth]{data/cs60.pdf}\hspace*{.25\textwidth}%
+			\includegraphics[page=1,width=.4\textwidth]{data/cs80.pdf}
+			\includegraphics[page=1,width=.4\textwidth]{data/cs100.pdf}\hspace*{.25\textwidth}%
+			\includegraphics[page=1,width=.4\textwidth]{data/cs120.pdf}
+			
+			\caption[Comptonmessung]{Die Messwerte der gestreuten Photonen bei verschiedenen Winkeln}
+			\label{fig:Comptonmessung}
+		\end{figure}
 
 \end{document}

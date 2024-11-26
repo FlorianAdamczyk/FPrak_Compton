@@ -11,6 +11,9 @@ fit <- lm(canal ~ energy, data = df)
 # zeige die werte davon an
 summary(fit)
 
+# Show the standard error of the intercept from the fit
+summary(fit)$coefficients[2, 2]
+
 #plotte die Daten
 library(ggplot2) # ggplot2 ist ein Paket für die Erstellung von Grafiken
 
@@ -18,8 +21,12 @@ library(ggplot2) # ggplot2 ist ein Paket für die Erstellung von Grafiken
     geom_smooth(method = "lm",     col = "#ff0000") +
     geom_point(size = 4, col = "#0b41b6") +
     labs(title = "Lineare Regression", x = "Energie [keV]", y = "Kanal") +
-    annotate("text", x = 0.15*max(df$energy), y = 1.1*max(df$canal), label = paste("y = ", round(fit$coefficients[1], 2), " + ", round(fit$coefficients[2], 2), "x", sep = ""), col = "#000000", size = 5)
+    annotate("text", x = 0.5*max(df$energy), y = 1.1*max(df$canal), label = paste("y =  (", round(fit$coefficients[1], 2)," +- ",round(summary(fit)$coefficients[1, 2], 2), ")  +  (", round(fit$coefficients[2], 2)," +- ", round(summary(fit)$coefficients[2, 2], 3), ")  x", sep = ""), col = "#000000", size = 5)
 )
 
 # Speichere den Graphen
 ggsave("EichLinFit.png", plot = graph, width = 1920, height = 1200, units = "px")
+
+
+
+
